@@ -1,20 +1,19 @@
-ll dfs(ll node,ll par)
+int dfsDiam(int node,int par)
 {
-    ll max1=0,max2=0;
-    for(auto x:v[node])
+    int mx1=0,mx2=0;    
+ 
+    for(auto it:v[node])
+    if(it!=par)
     {
-        if(x!=par && x<=n)
-        {
-            ll val=dfs(x,node);
-            if(val>=max1)
-            {
-                max2=max1;
-                max1=val;
-            }
-            else if(val>max2) max2=val;
-        }
+        int val=dfsDiam(it,node);
+ 
+        if(val>=mx1)
+        swap(mx1,mx2),mx1=val;
+        else if(val>mx2)
+        mx2=val;
+ 
+        diameter=max(diameter,mx1+mx2);
     }
-   //if(max1+max2>ans) ans=max1+max2;
-   if(node) return max1+1;
-   else return max1+max2;
-}
+ 
+    return mx1+1;
+} 

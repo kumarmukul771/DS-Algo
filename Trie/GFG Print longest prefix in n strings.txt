@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+struct trie
+{
+    trie* a[26];
+    int cnt;
+    trie()
+    {
+        cnt=0;
+        for(int i=0;i<26;i++)
+        a[i]=nullptr;
+    }
+};
+void build(trie* root,int level,string s)
+{
+    if(level==s.size())
+    return;
+    
+    int ind=s[level]-'a';
+    if(root->a[ind]==nullptr)
+    {
+        root->a[ind]=new trie();
+        root->a[ind]->cnt++;
+        build(root->a[ind],level+1,s);
+    }
+    else 
+    {
+        root->a[ind]->cnt++;
+        build(root->a[ind],level+1,s);
+    }
+}
+void search(trie* root,string& ans,int n,string str,int level)
+{
+    if(level==str.size())
+    return;
+    
+    int ind=str[level]-'a';
+    if(root->a[ind]->cnt==n)
+    {
+        ans+=('a'+ind);
+        search(root->a[ind],ans,n,str,level+1);
+    }
+    else return;
+    
+}
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int n;
+	    cin>>n;
+	    trie* root=new trie();
+	    string str="";
+	    
+	    for(int i=0;i<n;i++)
+	    {
+	        string s;
+	        cin>>s;
+	        
+	        if(s.size()>str.size())
+	        str=s;
+	        
+	        build(root,0,s);
+	    }
+	    string ans="";
+	    
+	    if(str=="")
+	    cout<<-1<<endl;
+	    else
+	    {
+	        search(root,ans,n,str,0);
+			if(ans=="")
+			cout<<-1<<endl;
+			else
+			cout<<ans<<endl;
+	    }
+	}
+	return 0;
+}
