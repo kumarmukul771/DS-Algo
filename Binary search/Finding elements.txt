@@ -1,0 +1,85 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() 
+{
+	//code
+	int t; 
+	cin>>t;
+	while(t--)
+	{
+	    int n,x;
+		cin>>n>>x;
+
+		int a[n];
+	    
+	    for(int i=0;i<n;i++)
+	    cin>>a[i];
+	    
+	    int l=0,r=n-1,m=0;
+
+		// ind of num just less than x;
+		int indl=-1;
+	    
+		// Finding number just less than x
+	    while(l<=r)
+	    {
+	        m=(r-l)/2 + l;
+
+			if(a[m]==x)
+			{
+				r=m-1;
+				indl=m-1;
+			}
+	        else if(a[m]>x)
+	        r=m-1;
+	        else 
+			{
+				l=m+1;
+				indl=m;
+			}
+	    }
+
+		// cout<<indl<<" ";
+	    
+	    int low=m;
+	    
+	    l=0;
+	    r=n-1;
+
+		// ind of number just greater than x
+		int indh=n;
+
+		// Finding number just greater than x
+	    while(l<=r)
+	    {
+	        m=(r-l)/2 + l;
+
+			if(a[m]==x)
+			{
+				l=m+1;
+				indh=m+1;
+			}
+			else if(a[m]<x)
+	        l=m+1;
+	        else 
+			{
+				r=m-1;
+				indh=m;
+			}
+	    }
+
+		if(indl==-1)
+		cout<<indh;
+		else if(indh==n)
+		cout<<n-1-indl;
+		else cout<<indh-indl-1;
+
+		// cout<<indh<<" ";
+		
+	}
+	return 0;
+}
+
+// 13 7
+// 4 5 5 6 6 6 7 7 7 7 7 9 9
